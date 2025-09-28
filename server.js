@@ -1,7 +1,6 @@
-// Use CommonJS-compatible import style
-import express = require("express");
-import fetch from "node-fetch";
-import cors = require("cors");
+const express = require("express");
+const fetch = require("node-fetch");
+const cors = require("cors");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -9,7 +8,7 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 
 app.get("/proxy", async (req, res) => {
-  const targetUrl = req.query.url as string;
+  const targetUrl = req.query.url;
 
   if (!targetUrl) {
     return res.status(400).json({ error: "Missing ?url parameter" });
@@ -30,7 +29,6 @@ app.get("/proxy", async (req, res) => {
       return res.status(500).json({ error: "Empty response body" });
     }
 
-    // Forward headers (important for binary/zip files)
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader(
       "Content-Type",
